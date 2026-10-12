@@ -1,0 +1,15 @@
+# Secrets: never upload. On the hosting, set them as environment variables instead.
+.env
+
+# Local data: shoes, text, the admin password hash and the Supabase backup copy
+data/
+assets/uploads/
+
+# Personal notes and Claude settings
+CLAUDE.md
+.claude/
+
+# Other
+node_modules/
+*.tmp
+*.log

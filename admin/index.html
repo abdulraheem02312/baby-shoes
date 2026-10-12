@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | Baby Shoes</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-192.png?v=2">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/admin.css">
+</head>
+<body>
+
+  <!-- Login / first time password -->
+  <main class="auth" id="auth" hidden>
+    <div class="auth-deco" aria-hidden="true"><span>👠</span><span>🥿</span><span>👡</span><span>👟</span></div>
+    <form class="auth-card" id="auth-form">
+      <a href="/" class="auth-logo"><img src="/assets/images/logo.webp?v=2" alt="Baby Shoes" width="180" height="180"></a>
+      <h1 id="auth-title">Admin login</h1>
+      <p id="auth-text" class="muted">Enter your password to manage the website.</p>
+      <label>Password
+        <input type="password" id="auth-password" autocomplete="current-password" required minlength="8">
+      </label>
+      <label id="auth-confirm-wrap" hidden>Type the password again
+        <input type="password" id="auth-confirm" autocomplete="new-password" minlength="8">
+      </label>
+      <p class="form-error" id="auth-error" role="alert"></p>
+      <button type="submit" class="btn btn-primary" id="auth-btn">Log in</button>
+    </form>
+  </main>
+
+  <!-- Dashboard -->
+  <div class="app" id="app" hidden>
+    <aside class="sidebar">
+      <div class="brand">
+        <a href="/" class="logo" target="_blank" rel="noopener"><img src="/assets/images/logo-mark.png?v=2" class="logo-mark" alt="" width="46" height="38">Baby <span>Shoes</span></a>
+        <span class="brand-tag">Admin panel</span>
+      </div>
+      <nav class="tabs" role="tablist" aria-label="Admin sections">
+        <button class="tab active" data-tab="shoes" role="tab" aria-selected="true"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#bag"></use></svg><span>Shoes</span><span class="tab-count" id="shoe-count"></span></button>
+        <button class="tab" data-tab="text" role="tab" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#text"></use></svg><span>Website text</span></button>
+        <button class="tab" data-tab="password" role="tab" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg><span>Password</span></button>
+      </nav>
+      <div class="side-bottom">
+        <span class="storage-badge" id="storage-badge" title="Where shoes, photos and text are saved"></span>
+        <a href="/" class="side-link" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#external"></use></svg><span>View website</span></a>
+        <button class="side-link" id="logout"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#logout"></use></svg><span>Log out</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <!-- Shoes -->
+      <section class="panel" id="tab-shoes">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow" id="today"></p>
+            <h1>Shoes</h1>
+            <p class="muted">Add new designs, change prices and photos, or mark a shoe out of stock. Changes show on the website straight away.</p>
+          </div>
+          <button class="btn btn-primary btn-lg" id="add-shoe"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#plus"></use></svg> Add new shoe</button>
+        </div>
+
+        <div class="stats" id="stats"></div>
+        <p class="filter-note" id="filter-note" hidden></p>
+
+        <div class="list-tools">
+          <div class="chips" id="cat-chips">
+            <button class="chip active" data-cat="all">All</button>
+            <button class="chip" data-cat="heels">Heels</button>
+            <button class="chip" data-cat="flats">Flats &amp; Khussa</button>
+            <button class="chip" data-cat="sandals">Sandals</button>
+            <button class="chip" data-cat="sneakers">Sneakers</button>
+          </div>
+          <label class="search">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#search"></use></svg>
+            <input type="search" id="shoe-search" placeholder="Search by name..." aria-label="Search shoes">
+          </label>
+        </div>
+
+        <div class="shoe-list" id="shoe-list"></div>
+        <div class="empty" id="shoe-empty" hidden>
+          <strong>No shoes here yet</strong>
+          <p class="muted">Press "Add new shoe" to add your first design.</p>
+        </div>
+      </section>
+
+      <!-- Website text -->
+      <section class="panel" id="tab-text" hidden>
+        <div class="panel-head">
+          <div>
+            <h1>Website text</h1>
+            <p class="muted">Change the headings and sentences on your website. Put a word between stars, like <code>*style*</code>, to make it blue and italic. Press Enter for a new line.</p>
+          </div>
+        </div>
+        <nav class="text-jump" id="text-jump" aria-label="Jump to a page"></nav>
+        <form id="text-form" class="text-form"></form>
+        <div class="save-bar" id="save-bar">
+          <span class="save-state" id="save-state">All changes saved</span>
+          <button type="button" class="btn btn-primary btn-lg" id="save-text" disabled>Save changes</button>
+        </div>
+      </section>
+
+      <!-- Password -->
+      <section class="panel" id="tab-password" hidden>
+        <div class="panel-head">
+          <div>
+            <h1>Change password</h1>
+            <p class="muted">Use at least 8 characters. Do not share it with anyone.</p>
+          </div>
+        </div>
+        <form id="password-form" class="card narrow">
+          <label>Current password <input type="password" id="pw-current" autocomplete="current-password" required></label>
+          <label>New password <input type="password" id="pw-new" autocomplete="new-password" required minlength="8"></label>
+          <label>Type the new password again <input type="password" id="pw-confirm" autocomplete="new-password" required minlength="8"></label>
+          <p class="form-error" id="pw-error" role="alert"></p>
+          <button type="submit" class="btn btn-primary btn-lg">Change password</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add / edit a shoe -->
+  <dialog class="editor" id="editor">
+    <form id="shoe-form" method="dialog">
+      <div class="editor-head">
+        <h2 id="editor-title">Add new shoe</h2>
+        <button type="button" class="icon-btn" id="editor-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#close"></use></svg></button>
+      </div>
+
+      <div class="editor-grid">
+        <div>
+          <span class="field-label">Photo</span>
+          <label class="drop" id="drop-main">
+            <input type="file" accept="image/jpeg,image/png,image/webp" id="photo-input" hidden>
+            <img id="photo-preview" alt="" hidden>
+            <span class="drop-text" id="photo-text"><strong>Tap to choose a photo</strong><br>or drag it here</span>
+          </label>
+          <button type="button" class="link-btn" id="photo-remove" hidden>Remove photo</button>
+          <p class="hint">Best: the whole shoe on a plain white background.</p>
+          <div class="preview">
+            <span class="field-label">How it looks on the website</span>
+            <div id="preview"></div>
+          </div>
+        </div>
+
+        <div class="fields">
+          <h3 class="sec-title"><span>1</span> Details</h3>
+          <label>Shoe name
+            <input type="text" id="f-name" maxlength="80" required placeholder="e.g. Golden Bridal Khussa">
+          </label>
+          <label>Category
+            <select id="f-cat" required>
+              <option value="heels">Heels</option>
+              <option value="flats">Flats &amp; Khussa</option>
+              <option value="sandals">Sandals</option>
+              <option value="sneakers">Sneakers</option>
+            </select>
+          </label>
+          <h3 class="sec-title"><span>2</span> Price</h3>
+          <div class="two">
+            <label>Price (Rs.)
+              <input type="number" id="f-price" min="1" step="1" required inputmode="numeric" placeholder="2999">
+            </label>
+            <label>Old price (Rs.) <small>for a sale, optional</small>
+              <input type="number" id="f-old" min="1" step="1" inputmode="numeric" placeholder="3499">
+            </label>
+          </div>
+          <h3 class="sec-title"><span>3</span> Stock and sizes</h3>
+          <label class="stock-switch">
+            <input type="checkbox" id="f-stock" role="switch">
+            <span class="stock-track" aria-hidden="true"></span>
+            <span><strong>Out of stock</strong><small>Turn on when this shoe is sold out. Turn off when it is back.</small></span>
+          </label>
+          <div class="size-picker">
+            <span class="field-label">Sizes not available</span>
+            <p class="hint">Tap a size that is finished. It turns orange and is removed from the website. Tap again when it is back.</p>
+            <div class="size-grid" id="f-sizes"></div>
+          </div>
+          <h3 class="sec-title"><span>4</span> Where it shows</h3>
+          <label class="check"><input type="checkbox" id="f-best"> Show on home page ("Our most loved pairs")</label>
+          <label class="check"><input type="checkbox" id="f-hidden"> Hide from website (keep it saved here)</label>
+
+          <details class="baby-box">
+            <summary>Baby size (optional)</summary>
+            <label>Baby price (Rs.)
+              <input type="number" id="f-baby-price" min="1" step="1" inputmode="numeric" placeholder="1499">
+            </label>
+            <span class="field-label">Baby photo</span>
+            <label class="drop small" id="drop-baby">
+              <input type="file" accept="image/jpeg,image/png,image/webp" id="baby-input" hidden>
+              <img id="baby-preview" alt="" hidden>
+              <span class="drop-text" id="baby-text"><strong>Choose baby photo</strong></span>
+            </label>
+            <button type="button" class="link-btn" id="baby-remove" hidden>Remove baby photo</button>
+          </details>
+        </div>
+      </div>
+
+      <p class="form-error" id="shoe-error" role="alert"></p>
+      <div class="editor-actions">
+        <button type="button" class="btn btn-danger" id="shoe-delete" hidden>Delete shoe</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-ghost" id="shoe-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="shoe-save">Save shoe</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/assets/admin.js"></script>
+</body>
+</html>

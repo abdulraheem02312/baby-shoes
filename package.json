@@ -1,0 +1,13 @@
+{
+  "name": "baby-shoes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Baby Shoes website and admin panel. No packages needed: only Node's built-in modules.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
